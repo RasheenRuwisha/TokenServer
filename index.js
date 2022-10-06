@@ -4,9 +4,7 @@ var {Token, Priviledges} = AccessToken;
 
 var PORT = process.env.PORT || 8080;
 
-if (!(process.env.APP_ID && process.env.APP_CERTIFICATE)) {
-    throw new Error('You must define an APP_ID and APP_CERTIFICATE');
-}
+
 var APP_ID = '4e0370075e574ef0952c98118c284498';
 var APP_CERTIFICATE = 'bb9663d662554cd5950f7587fae91a3e';
 
