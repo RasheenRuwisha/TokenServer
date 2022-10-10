@@ -1,27 +1,9 @@
 var express = require('express');
-var {AccessToken} = require('agora-access-token');
-var {Token, Priviledges} = AccessToken;
-
-var app = express();
-
-
-const stripe = require('stripe')('sk_test_UErVLRDhFKCtj3Zj5fU7DKT8008mCYPvRt');
-
-app.get('/api/doPayment/', async (req, res) => {
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: req.body.amount,
-        currency: 'usd',
-      });
-      res.send({
-        clientSecret: paymentIntent.client_secret,
-      });
-});
 
 var PORT = process.env.PORT || 8080;
+const stripe = require('stripe')('sk_test_UErVLRDhFKCtj3Zj5fU7DKT8008mCYPvRt');
 
 
-var APP_ID = '4e0370075e574ef0952c98118c284498';
-var APP_CERTIFICATE = 'bb9663d662554cd5950f7587fae91a3e';
 
 var app = express();
 
@@ -31,15 +13,25 @@ function nocache(req, res, next) {
     res.header('Pragma', 'no-cache');
     next();
 }
-app.get('/acess_token/', async (req, res) => {
+
+var generateAccessToken = async function (req, resp) {
+    resp.header('Access-Control-Allow-Origin', "*")
+
+    var amount = req.query.amount;
+    if (!amount) {
+        return resp.status(500).json({ 'error': 'amount is required' });
+    }
+
     const paymentIntent = await stripe.paymentIntents.create({
-        amount: req.body.amount,
+        amount: amount,
         currency: 'usd',
       });
-      res.send({
+      resp.send({
         clientSecret: paymentIntent.client_secret,
       });
-});
+};
+
+app.get('/access_token', nocache, generateAccessToken);
 
 app.listen(PORT, function () {
     console.log('Service URL http://127.0.0.1:' + PORT + "/");
