@@ -6,8 +6,10 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "add": "^2.0.6",
     "agora-access-token": "^1.0.2",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "stripe": "^10.13.0"
   },
   "author": "Agora.IO",
   "repository": {
