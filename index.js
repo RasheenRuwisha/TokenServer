@@ -17,8 +17,8 @@ app.get('/api/doPayment/', async (req, res) => {
       });
 });
 
-app.listen(PORT, function () {
-    console.log('Service URL http://127.0.0.1:' + PORT + "/");
+app.listen(5000, function () {
+    console.log('Service URL http://127.0.0.1:' + 5000 + "/");
     console.log('Channel Key request, /access_token?uid=[user id]&channel=[channel name]');
     console.log('Channel Key with expiring time request, /access_token?uid=[user id]&channel=[channel name]&expiredTs=[expire ts]');
 });
