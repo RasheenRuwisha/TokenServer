@@ -2,6 +2,9 @@ var express = require('express');
 var {AccessToken} = require('agora-access-token');
 var {Token, Priviledges} = AccessToken;
 
+var app = express();
+
+
 const stripe = require('stripe')('sk_test_UErVLRDhFKCtj3Zj5fU7DKT8008mCYPvRt');
 
 app.get('/api/doPayment/', async (req, res) => {
