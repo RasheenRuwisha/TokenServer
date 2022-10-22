@@ -31,7 +31,30 @@ var generateAccessToken = async function (req, resp) {
       });
 };
 
+
+var generatePayout = async function (req, resp) {
+    resp.header('Access-Control-Allow-Origin', "*")
+
+    var amount = req.query.amount;
+    if (!amount) {
+        return resp.status(500).json({ 'error': 'amount is required' });
+    }
+
+    const payout = await stripe.payouts.create({
+        amount: amount,
+        currency: 'usd',
+      });
+      resp.send({
+        payout
+      });
+};
+
+
+
+
+
 app.get('/access_token', nocache, generateAccessToken);
+app.get('/access_token', nocache, generatePayout);
 
 app.listen(PORT, function () {
     console.log('Service URL http://127.0.0.1:' + PORT + "/");
