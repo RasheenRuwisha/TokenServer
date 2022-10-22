@@ -36,12 +36,15 @@ var generatePayout = async function (req, resp) {
     resp.header('Access-Control-Allow-Origin', "*")
 
     var amount = req.query.amount;
+    var destination = req.query.destination;
+
     if (!amount) {
         return resp.status(500).json({ 'error': 'amount is required' });
     }
 
     const payout = await stripe.payouts.create({
         amount: amount,
+        destination: destination,
         currency: 'usd',
       });
       resp.send({
@@ -54,7 +57,7 @@ var generatePayout = async function (req, resp) {
 
 
 app.get('/access_token', nocache, generateAccessToken);
-app.get('/access_token', nocache, generatePayout);
+app.get('/payout', nocache, generatePayout);
 
 app.listen(PORT, function () {
     console.log('Service URL http://127.0.0.1:' + PORT + "/");
